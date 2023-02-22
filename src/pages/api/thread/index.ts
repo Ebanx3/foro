@@ -1,4 +1,4 @@
-import { createCategory, getAllCategories } from '@/database/controllers/categories'
+import { createThread } from '@/database/controllers/threads';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 
@@ -8,11 +8,8 @@ export default function handler(
 ) {
     console.log(req.method)
     switch (req.method) {
-        case 'GET': {
-            return getAllCategories(req, res);
-        }
         case 'POST': {
-            return createCategory(req, res);
+            return createThread(req, res);
         }
         default: {
             return res.status(400).json({

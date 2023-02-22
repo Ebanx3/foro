@@ -1,4 +1,4 @@
-import { addSubCategory } from '@/database/controllers/mongo';
+import { addSubCategory } from '@/database/controllers/categories';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(

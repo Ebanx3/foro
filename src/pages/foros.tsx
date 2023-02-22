@@ -18,7 +18,7 @@ const Foros = ({ cats }: any) => {
       <div className="w-1/5"></div>
       <div className="w-3/5">
         {cats.map((cat: any) => {
-          <ForumCategory category={cat} />;
+          return <ForumCategory key={cat.id} category={cat} />;
         })}
       </div>
       <div className="w-1/5 bg-white border-l-2">publicidad</div>
@@ -44,7 +44,7 @@ export async function getStaticProps() {
       };
       return cate;
     });
-    console.log(cats);
+
     return {
       props: {
         cats,
