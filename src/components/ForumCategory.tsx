@@ -13,14 +13,14 @@ const ForumCategory = ({ category }: { category: any }) => {
       <div className="flex flex-col items-start ml-4">
         <Link
           href={`/cat/${category.name.toLowerCase()}`}
-          className="font-bold text-xl text-rose-500 uppercase hover:text-slate-700"
+          className="font-bold text-xl text-orange-600 uppercase hover:text-orange-400 mt-4"
         >
           {category.name}
         </Link>
         <div>
           {category.subCategory.map((cat: string) => (
             <Link
-              href={`/topic/${category.name.toLowerCase()}-${cat}`}
+              href={`/topic/${cat}`}
               key={`${cat}`}
               className="mr-2 font-bold text-slate-400 hover:text-slate-500 uppercase"
             >

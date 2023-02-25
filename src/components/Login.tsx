@@ -30,7 +30,7 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
       const userData = jwt.decode(json);
 
       setUser(userData);
-      setShowLogin();
+      setShowLogin(false);
     } else {
       return showAlert("Completa ambos campos");
     }
@@ -44,7 +44,7 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
   };
 
   return (
-    <div className=" absolute right-0 top-16 bg-zinc-300 p-4 userP">
+    <div className=" absolute right-0 top-12 bg-white border-l-2 border-b-2 p-4">
       {user?.username ? (
         <UserMenu />
       ) : (
@@ -52,7 +52,7 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
           <input
             type="text"
             value={username}
-            className="mt-1 text-center rounded-full"
+            className="mt-1 text-center rounded-full bg-zinc-50 border-zinc-400 border-2"
             onChange={(e) => {
               setUsername(e.target.value);
             }}
@@ -61,7 +61,7 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
           <input
             type="password"
             value={password}
-            className="mt-2 text-center rounded-full"
+            className="mt-2 text-center rounded-full bg-zinc-50 border-zinc-400 border-2"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -69,7 +69,7 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
           />
           <button
             type="button"
-            className="bg-rose-400 p-1 px-2 rounded-full text-white mt-2 hover:bg-rose-500"
+            className="bg-cyan-600 p-1 px-2 rounded-full text-white mt-2 hover:bg-cyan-500"
             onClick={() => {
               handleLogin();
             }}
@@ -78,8 +78,11 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
           </button>
           <span className="text-sm mt-2">No tienes una cuenta?</span>
           <Link
-            href="/registrate"
-            className="font-bold text-rose-600 text-sm hover:text-rose-400"
+            href="/registro"
+            className="font-bold text-cyan-600 text-sm hover:text-cyan-500"
+            onClick={() => {
+              setShowLogin(false);
+            }}
           >
             CREA UNA
           </Link>
