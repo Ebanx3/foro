@@ -22,9 +22,9 @@ const Nav = () => {
             name="search"
             id="search"
             placeholder="buscar..."
-            className="mr-4 bg-sky-100 rounded-full text-center text-black focus:outline-none w-28 focus:w-52 transition-all ease-linear"
+            className="mr-4 bg-cyan-50 rounded-full text-center text-black focus:outline-none w-28 focus:w-52 transition-all ease-linear"
           />
-          <button className="text-white h-8 w-8 overflow-hidden absolute right-3 -bottom-1 bg-black rounded-full hover:bg-orange-500 ">
+          <button className="text-white h-8 w-8 overflow-hidden absolute right-3 -bottom-1 bg-cyan-500 rounded-full hover:bg-orange-500 ">
             <span className="material-symbols-outlined">search</span>
           </button>
         </div>

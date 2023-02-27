@@ -115,7 +115,7 @@ const Registro = () => {
             )}
 
             <button
-              className="mt-6 w-1/4 p-2 m-auto bg-rose-500 hover:bg-red-400 text-white rounded-full"
+              className="mt-6 w-1/4 p-2 m-auto bg-cyan-600 hover:bg-cyan-500 text-white rounded-full"
               type="submit"
               disabled={isSubmitting}
             >

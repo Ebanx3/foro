@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
 import { context } from "@/UserContext";
 import { useRouter } from "next/router";
+import { Remarkable } from "remarkable";
+
+const md = new Remarkable();
 
 const NewThread = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [type, setType] = useState("comun");
-
+  const [preview, setPreview] = useState(false);
   const { user }: any = useContext(context);
 
   const route = useRouter();
@@ -56,6 +59,9 @@ const NewThread = () => {
         <label className="mt-4 font-bold mb-1" htmlFor="message">
           Mensaje:
         </label>
+        <div className="bg-zinc-100">
+          <button className="font-bold border-2 px-2">b</button>
+        </div>
         <textarea
           className="p-2 resize-none border-2 border-slate-400 bg-slate-100"
           name="message"
@@ -87,6 +93,9 @@ const NewThread = () => {
           <button
             type="button"
             className="bg-rose-500 p-2 hover:bg-rose-400 text-white rounded-md"
+            onClick={() => {
+              setPreview(true);
+            }}
           >
             Previsualizar
           </button>
@@ -101,6 +110,15 @@ const NewThread = () => {
           </button>
         </div>
       </form>
+
+      {preview ? (
+        <div className="bg-white mt-4 py-4 px-6 w-3/4 message">
+          <h1>{title}</h1>
+          <div dangerouslySetInnerHTML={{ __html: md.render(content) }}></div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
