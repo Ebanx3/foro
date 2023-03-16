@@ -13,7 +13,7 @@ const ForumCategory = ({ category }: { category: any }) => {
       <div className="flex flex-col items-start ml-4">
         <Link
           href={`/cat/${category.name.toLowerCase()}`}
-          className="font-bold text-xl text-blue-600 uppercase hover:text-blue-400 mt-4"
+          className="font-bold text-xl text-sky-600 uppercase hover:text-blue-400 mt-4"
         >
           {category.name}
         </Link>

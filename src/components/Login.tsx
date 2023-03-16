@@ -2,15 +2,14 @@ import { useContext, useState } from "react";
 import Link from "next/link";
 import { context } from "@/UserContext";
 import UserMenu from "./UserMenu";
-import jwt from "jsonwebtoken";
 
 const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [alert, setAlert] = useState<string>("");
-
   const { user, setUser }: any = useContext(context);
+
+  const [alert, setAlert] = useState<string>("");
 
   const handleLogin = async () => {
     if (username != "" && password != "") {
@@ -26,10 +25,8 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
       if (response.message == "Invalid password") {
         return showAlert("Password inválido");
       }
-      const json: string = res.headers.get("auth-token") || "";
-      const userData = jwt.decode(json);
 
-      setUser(userData);
+      setUser(response.user);
       setShowLogin(false);
     } else {
       return showAlert("Completa ambos campos");

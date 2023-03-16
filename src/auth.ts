@@ -1,35 +1,34 @@
 import jwt from "jsonwebtoken";
-import { NextRequest, NextResponse } from "next/server";
-import { NextMiddleware } from "next/server";
-import users from "./database/models/users";
+import { serialize } from "cookie";
 
 export const generateAuthToken = (user: any) => {
     const data = {
         username: user.username,
         userId: user._id,
         rol: user.rol,
+        urlAvatar: user.urlAvatar
     }
 
     const token = jwt.sign(data, process.env.TOKEN_SECRET_KEY || '', { expiresIn: '15 days' });
-    return token;
+
+    const serialized = serialize("tokenAuth", token, { httpOnly: true, sameSite: 'strict', maxAge: 1000 * 60 * 60 * 24 * 15, path: '/' })
+
+    return serialized;
 }
 
-// export const checkAuth = async (req: NextRequest) => {
-//     const { cookies } = req;
+export const setAuthTokenNull = () => {
+    const serialized = serialize("tokenAuth", "", { httpOnly: true, sameSite: 'strict', maxAge: 0, path: '/' });
+    return serialized;
+}
 
-//     const token = req.get('auth-token');
+export const checkAuth = (token: string): boolean => {
+    try {
+        jwt.verify(token, process.env.TOKEN_SECRET_KEY || ' ');
+        return true
+    }
+    catch (error) {
+        console.log(error);
+        return false
+    }
 
-    
-//     if (!token) return res.status(401).json({ msg: 'error', data: 'Unatuhorized' });
-
-//     try {
-//         const decode: any = jwt.verify(token, config.TOKEN_SECRET_KEY || ' ');
-//         const user = await UserModel.findById(decode.userId);
-//         if (!user) return res.status(400).json({ msg: 'error', data: 'Unauthorized' })
-
-//         next()
-//     }
-//     catch (err) {
-//         return res.status(500).json({ msg: 'error', data: 'can´t verify the token' })
-//     }
-// }
+}

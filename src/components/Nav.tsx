@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Login from "./Login";
+import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Nav = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -10,9 +12,9 @@ const Nav = () => {
   };
 
   return (
-    <nav className=" h-12 sticky top-0 bg-cyan-700 flex flex-row justify-between  px-10 flex-nowrap items-end z-20">
+    <nav className=" h-12 sticky top-0 bg-cyan-800 flex flex-row justify-between  px-10 flex-nowrap items-end z-20">
       <Link href="/" className="font-bold text-3xl text-white hover:text-white">
-        x3T
+        code-foro
       </Link>
 
       <div className="flex items-end pb-2">
@@ -24,8 +26,8 @@ const Nav = () => {
             placeholder="buscar..."
             className="mr-4 bg-cyan-50 rounded-full text-center text-black focus:outline-none w-28 focus:w-52 transition-all ease-linear"
           />
-          <button className="text-white h-8 w-8 overflow-hidden absolute right-3 -bottom-1 bg-cyan-500 rounded-full hover:bg-orange-500 ">
-            <span className="material-symbols-outlined">search</span>
+          <button className="text-white h-6 w-6 overflow-hidden absolute right-4 -bottom-0 bg-cyan-600 rounded-full hover:bg-orange-500 ">
+            <FontAwesomeIcon icon={solid("magnifying-glass")} />
           </button>
         </div>
         <Link

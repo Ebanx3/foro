@@ -1,9 +1,14 @@
 import ThreadModel from "../models/thread";
 import MessageModel from "../models/message";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { checkAuth } from "@/auth";
 
 const createThread = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
+        const { tokenAuth } = req.cookies;
+        if (!tokenAuth || !checkAuth(tokenAuth)) {
+            return res.status(401).json({ success: false, message: "Unauthorized" })
+        }
         const { title, ownerInfo, content, category, type } = req.body;
 
         if (!title || !ownerInfo || !content || !category || !type) {

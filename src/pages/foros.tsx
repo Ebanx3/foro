@@ -1,13 +1,14 @@
 import ForumCategory from "@/components/ForumCategory";
 import CategoryModel from "../../src/database/models/categories";
+import Layout from "@/components/Layout";
 
 const Foros = ({ cats }: any) => {
   return (
-    <>
+    <Layout>
       {cats.map((cat: any) => {
         return <ForumCategory key={cat.id} category={cat} />;
       })}
-    </>
+    </Layout>
   );
 };
 

@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const token = generateAuthToken(user);
 
-        return res.status(200).setHeader('auth-token', token).json({ sucess: true, message: 'ok' })
+        return res.status(200).setHeader('Set-Cookie', token).json({ sucess: true, message: 'ok', user: { username: user.username, userId: user.user_id, rol: user.rol, urlAvatar: user.urlAvatar } })
     }
     catch (error) {
         console.log(error);

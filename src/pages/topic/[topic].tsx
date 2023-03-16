@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { context } from "@/UserContext";
 import Thread from "../../components/Thread";
 import ThreadModel from "../../database/models/thread";
+import Layout from "@/components/Layout";
 
 const Topic = ({ threads }: any) => {
   const route = useRouter();
@@ -11,23 +12,32 @@ const Topic = ({ threads }: any) => {
   const { user }: any = useContext(context);
 
   return (
-    <div className="flex flex-col w-11/12 m-auto">
-      <br />
-      {user.username ? (
-        <Link
-          href={`/nuevo-hilo/${route.query.topic}`}
-          className="py-1 px-2 bg-cyan-600 self-end text-white rounded-full hover:bg-black mt-2"
-        >
-          Nuevo hilo
-        </Link>
-      ) : (
-        <></>
-      )}
+    <Layout>
+      <div className="flex flex-col w-11/12 m-auto">
+        <br />
+        {user.username ? (
+          <Link
+            href={`/nuevo-hilo/${route.query.topic}`}
+            className="py-1 px-2 bg-cyan-600 self-end text-white rounded-full hover:bg-black mt-2"
+          >
+            Nuevo hilo
+          </Link>
+        ) : (
+          <></>
+        )}
 
-      {threads.map((thread: any) => {
-        return <Thread key={thread.id} thread={thread} />;
-      })}
-    </div>
+        {threads.map((thread: any) => {
+          return <Thread key={thread.id} thread={thread} />;
+        })}
+        {threads.length == 0 ? (
+          <div className="p-8 bg-zinc-200 mt-8 rounded-lg text-center">
+            No existen hilos en esta categoría
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
+    </Layout>
   );
 };
 

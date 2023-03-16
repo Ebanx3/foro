@@ -1,4 +1,4 @@
-import { addSubCategory } from '@/database/controllers/categories';
+import { updateMessage, deleteMessage } from '@/database/controllers/messages';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(
@@ -7,7 +7,10 @@ export default function handler(
 ) {
     switch (req.method) {
         case 'PUT': {
-            return addSubCategory(req, res);
+            return updateMessage(req, res);
+        }
+        case 'DELETE': {
+            return deleteMessage(req, res);
         }
         default: {
             return res.status(400).json({

@@ -1,13 +1,15 @@
-import { addSubCategory } from '@/database/controllers/categories';
+import { createMessage } from '@/database/controllers/messages';
 import type { NextApiRequest, NextApiResponse } from 'next'
+
 
 export default function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+
     switch (req.method) {
-        case 'PUT': {
-            return addSubCategory(req, res);
+        case 'POST': {
+            return createMessage(req, res);
         }
         default: {
             return res.status(400).json({

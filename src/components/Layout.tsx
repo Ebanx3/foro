@@ -10,15 +10,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="w-1/5 bg-white border-l-2 h-[calc(100vh-5rem)] sticky top-12 p-4">
           <span className="text-lg uppercase font-bold">cosas por hacer</span>
           <ol>
-            <li> - editar y borrar mensajes</li>
-            <li> - subir avatar vercel nextjs</li>
-            <li> - compartir posts en likedin</li>
-            <li> - seguridad y persistencia de login</li>
-            <li> - que poner en index</li>
-            <li> - trabajo de seo y paginación</li>
-            <li> - sistema de logros</li>
-            <li> - trabajar resposive</li>
-            <li> - evaluar publicidad?</li>
+            <li className="line-through"> - editar y borrar mensajes</li>
+            <li className="line-through"> - subir avatar vercel nextjs</li>
+            <li className="line-through">
+              {" "}
+              - seguridad y persistencia de login
+            </li>
+            <li className=""> - que poner en index</li>
+            <li className=""> - trabajo de seo y paginación</li>
+            <li className=""> - sistema de logros</li>
+            <li className=""> - trabajar resposive</li>
+            <li className=""> - evaluar publicidad?</li>
           </ol>
         </div>
       </div>

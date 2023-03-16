@@ -1,65 +1,72 @@
 import ThreadModel from "../../database/models/thread";
 import MessageModel from "../../database/models/message";
-import { useState } from "react";
-import { Remarkable } from "remarkable";
+import Message from "@/components/Message";
+import { useContext, useState, useEffect } from "react";
+import { context } from "@/UserContext";
+import Layout from "@/components/Layout";
+import Answer from "@/components/Answer";
 
-const md = new Remarkable();
+const Hilo = ({ firstMessage, messages, thread }: any) => {
+  const { user }: any = useContext(context);
 
-const Hilo = ({ messages, thread }: any) => {
-  const [likes, setLikes] = useState(messages[0].likes);
-  const [liked, setLiked] = useState(false);
+  const [answer, setAnswer] = useState(false);
+  const [msgs, setMsgs] = useState(messages);
 
-  const handleAddLike = () => {
-    if (!liked) {
-      setLikes(likes + 1);
-      setLiked(true);
-    } else {
-      setLikes(likes - 1);
-      setLiked(false);
-    }
+  const deleteMessage = async (messageId: string) => {
+    const index = msgs.findIndex((elem: any) => elem.id == messageId);
+    if (index < 0) return;
+    const newMsgs = [...msgs];
+    await newMsgs.splice(index, 1);
+    setMsgs(newMsgs);
   };
 
+  const addMessage = (message: any) => {
+    const newMsgs = msgs;
+    newMsgs.push(message);
+    setMsgs(newMsgs);
+  };
+
+  useEffect(() => {}, [msgs]);
   return (
-    <div className="bg-white flex w-11/12 border-2 mt-4 relative message">
-      <div className="w-1/5 border-r-2 p-4">
-        <span>{thread.ownerInfo.name}</span>
-      </div>
-
-      <div className="w-4/5 mx-2 my-8">
-        <span className="text-zinc-400 block mb-2 text-sm text-end">
-          {thread.createdAt}
-        </span>
-        <h1 className="text-3xl inline-block my-4 mr-2">{thread.title}</h1>
-        {thread.type == "tutorial" ? (
-          <span className="text-xs bg-blue-500 text-white uppercase font-bold p-1 rounded-full mr-2">
-            {thread.type}
-          </span>
-        ) : (
-          <></>
-        )}
-        {thread.type == "consulta" ? (
-          <span className="text-xs bg-red-500 text-white uppercase font-bold p-1 rounded-full mr-2">
-            {thread.type}
-          </span>
-        ) : (
-          <></>
-        )}
-
-        <span
-          className="mt-4"
-          dangerouslySetInnerHTML={{ __html: md.render(messages[0].content) }}
+    <Layout>
+      <div className="flex flex-col w-11/12  mx-auto my-8">
+        <Message
+          message={firstMessage}
+          title={thread.title}
+          type={thread.type}
         />
+        {user.username ? (
+          <button
+            className="py-1 px-2 bg-cyan-600 self-end text-white rounded-full hover:bg-black my-4"
+            onClick={() => setAnswer(true)}
+          >
+            Responder
+          </button>
+        ) : (
+          <></>
+        )}
+
+        {answer ? (
+          <Answer
+            thread={thread}
+            setAnswer={setAnswer}
+            addMessage={addMessage}
+          />
+        ) : (
+          <></>
+        )}
+
+        {msgs.map((mssg: any) => {
+          return (
+            <Message
+              key={mssg.id}
+              message={mssg}
+              deleteMessage={deleteMessage}
+            />
+          );
+        })}
       </div>
-      <button
-        className="absolute right-1 bottom-1 flex items-center text-rose-400"
-        onClick={() => {
-          handleAddLike();
-        }}
-      >
-        <span className="font-bold mr-1">{likes}</span>
-        <span className="material-symbols-outlined">favorite</span>
-      </button>
-    </div>
+    </Layout>
   );
 };
 
@@ -96,8 +103,11 @@ export async function getServerSideProps(datos: any) {
     };
   });
 
+  const firstMessage = formatedMessages.shift();
+
   return {
     props: {
+      firstMessage: firstMessage,
       messages: formatedMessages,
       thread: formatedThread,
     },
