@@ -11,7 +11,13 @@ export default async function handler(
                 const { userId } = req.query;
                 if (!userId) return res.status(404).json({ success: false, message: 'Body must have userId' });
                 const user = await UserModel.findById(userId)
-                return res.status(200).json({ success: true, user })
+                const formatedUser = {
+                    username: user.username,
+                    rol: user.rol,
+                    urlAvatar: user.urlAvatar,
+                    id: user._id
+                }
+                return res.status(200).json({ success: true, formatedUser })
             }
             catch (err) {
                 console.log(err)

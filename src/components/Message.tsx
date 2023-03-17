@@ -1,20 +1,18 @@
 import { useState, useContext, useEffect } from "react";
 import { context } from "@/UserContext";
-import {
-  solid,
-  regular,
-  brands,
-} from "@fortawesome/fontawesome-svg-core/import.macro";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Remarkable } from "remarkable";
 import EditingMessage from "./EditingMessage";
 import Image from "next/image";
+import formatDate from "@/formatDate";
 
 const md = new Remarkable();
 
 const Message = ({ message, title, type, deleteMessage }: any) => {
   const [likes, setLikes] = useState(message.likes);
   const [liked, setLiked] = useState(false);
+
   const [msg, setMsg] = useState(message);
 
   const [messageUser, setMessageUser] = useState({ urlAvatar: "", rol: "" });
@@ -46,14 +44,14 @@ const Message = ({ message, title, type, deleteMessage }: any) => {
         user.rol == "moderador" ||
         user.rol == "admin"
     );
-  }, [user]);
+  }, [user, message.userInfo.name]);
 
   useEffect(() => {
     setLoadingUser(true);
     fetch(`/api/user/${message.userInfo.userId}`)
       .then((res) => res.json())
       .then((user) => {
-        setMessageUser(user.user);
+        setMessageUser(user.formatedUser);
         setLoadingUser(false);
       });
   }, []);
@@ -64,14 +62,14 @@ const Message = ({ message, title, type, deleteMessage }: any) => {
         <span className="font-bold text-cyan-600 text-lg">
           {message.userInfo.name}
         </span>
-        {messageUser.rol != "usuario" ? (
+        {messageUser?.rol && messageUser.rol != "user" ? (
           <span className="bg-orange-600 text-white font-bold text-sm px-2 rounded-full">
             {messageUser.rol}
           </span>
         ) : (
           <></>
         )}
-        {!loadingUser ? (
+        {!loadingUser && messageUser.urlAvatar ? (
           <div className="w-36 h-36 overflow-hidden relative mt-3">
             <Image
               src={messageUser.urlAvatar}
@@ -84,7 +82,17 @@ const Message = ({ message, title, type, deleteMessage }: any) => {
             />
           </div>
         ) : (
-          <></>
+          <div className="w-36 h-36 overflow-hidden relative mt-3">
+            <Image
+              src={"/img/noAvatar.jpeg"}
+              alt="avatar"
+              // width={300}
+              // height={300}
+              fill
+              sizes="(width: 144px) (height: 144px)"
+              className="object-cover relative top-0"
+            />
+          </div>
         )}
       </div>
 
@@ -101,7 +109,7 @@ const Message = ({ message, title, type, deleteMessage }: any) => {
         ) : (
           <>
             <span className="text-zinc-400 block mb-2 text-sm text-end">
-              {message.createdAt}
+              {formatDate(message.createdAt)}
             </span>
             <h1 className="text-3xl inline-block my-4 mr-2">{title}</h1>
             {type == "tutorial" ? (
@@ -137,7 +145,12 @@ const Message = ({ message, title, type, deleteMessage }: any) => {
               )}
 
               <button
-                className="text-white bg-zinc-400 rounded-md mr-2 p-1 flex items-center hover:bg-rose-600"
+                className={
+                  !user.username
+                    ? "text-white bg-zinc-400 rounded-md mr-2 p-1 flex items-center "
+                    : "text-white bg-zinc-400 rounded-md mr-2 p-1 flex items-center hover:bg-rose-600 "
+                }
+                disabled={!user.username}
                 onClick={() => {
                   handleAddLike();
                 }}

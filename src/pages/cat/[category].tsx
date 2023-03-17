@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { context } from "@/UserContext";
 import Thread from "../../components/Thread";
 import Layout from "@/components/Layout";
+import formatDate from "@/formatDate";
 
 const Categoria = ({ subcategories, threads }: any) => {
   const route = useRouter();
@@ -57,8 +58,8 @@ export async function getServerSideProps(datos: any) {
       title: thread.title,
       lastCommenter: thread.lastCommenter,
       type: thread.type,
-      createdAt: thread.createdAt.toString(),
-      updatedAt: thread.updatedAt.toString(),
+      createdAt: formatDate(thread.createdAt.toString()),
+      updatedAt: formatDate(thread.updatedAt.toString()),
     };
   });
 

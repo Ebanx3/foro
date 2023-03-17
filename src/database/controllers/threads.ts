@@ -51,4 +51,21 @@ const createThread = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 }
 
-export { createThread }
+const modifyLastCommenter = async (threadId: string, userName: string) => {
+    try {
+        await ThreadModel.findByIdAndUpdate(threadId, { lastCommenter: userName })
+        return {
+            success: true,
+            message: "Thread updated"
+        }
+    }
+    catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            message: 'Was impossible to create a new thread'
+        }
+    }
+}
+
+export { createThread, modifyLastCommenter }

@@ -2,6 +2,7 @@ import MessageModel from "../models/message";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { isValidObjectId } from "mongoose";
 import { checkAuth } from "@/auth";
+import { modifyLastCommenter } from "./threads";
 
 const createMessage = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -12,6 +13,11 @@ const createMessage = async (req: NextApiRequest, res: NextApiResponse) => {
         const { userInfo, content, threadId } = req.body;
         if (!userInfo || !content || !threadId) return res.status(400).json({ success: false, message: 'body must have userInfo, content and threadId field to create a new category' })
         const newCategory = await MessageModel.create({ userInfo, content, threadId });
+
+        const resp: any = await modifyLastCommenter(threadId, userInfo.name);
+        console.log(resp)
+        if (!resp.success) return res.status(400).json(resp)
+
         return res.status(200).json({
             success: true,
             message: `Message created`,

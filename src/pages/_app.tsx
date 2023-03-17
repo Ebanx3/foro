@@ -6,8 +6,16 @@ import { useState, useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <UserContext>
-      <Component {...pageProps} />
-    </UserContext>
+    <>
+      <Head>
+        <meta
+          name="description"
+          content="Un sitio web donde buscar y compartir información sobre desarrollo de software"
+        />
+      </Head>
+      <UserContext>
+        <Component {...pageProps} />
+      </UserContext>
+    </>
   );
 }

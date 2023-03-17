@@ -8,12 +8,13 @@ const ForumCategory = ({ category }: { category: any }) => {
         src={`/img/${category.imgUrl}`}
         width={120}
         height={120}
+        priority
         alt={`${category.name}`}
       />
       <div className="flex flex-col items-start ml-4">
         <Link
           href={`/cat/${category.name.toLowerCase()}`}
-          className="font-bold text-xl text-sky-600 uppercase hover:text-blue-400 mt-4"
+          className="font-bold text-xl text-sky-700 uppercase hover:text-blue-400 mt-4"
         >
           {category.name}
         </Link>
@@ -22,7 +23,7 @@ const ForumCategory = ({ category }: { category: any }) => {
             <Link
               href={`/topic/${cat}`}
               key={`${cat}`}
-              className="mr-2 font-bold text-slate-400 hover:text-slate-500 uppercase"
+              className="mr-2 font-bold text-slate-500 hover:text-slate-400 uppercase"
             >
               {cat}
             </Link>

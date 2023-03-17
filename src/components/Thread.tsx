@@ -26,10 +26,10 @@ const Thread = ({ thread }: any) => {
           )}
           <span className="font-bold p-1">{thread.title} </span>
         </div>
-        <span className="text-zinc-400 font-bold mb-2">
+        <span className="text-zinc-500 font-bold mb-2">
           {thread.ownerInfo.name}
         </span>
-        <span>{thread.createdAt}</span>
+        <span className="text-zinc-400 text-sm">{thread.createdAt}</span>
       </div>
       <div>
         <span className="text-sm">
