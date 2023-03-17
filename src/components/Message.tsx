@@ -57,20 +57,22 @@ const Message = ({ message, title, type, deleteMessage }: any) => {
   }, []);
 
   return (
-    <div className="bg-white flex border-2 my-4 relative message">
-      <div className="w-1/5 border-r-2 p-4 flex flex-col items-center">
-        <span className="font-bold text-cyan-600 text-lg">
-          {message.userInfo.name}
-        </span>
-        {messageUser?.rol && messageUser.rol != "user" ? (
-          <span className="bg-orange-600 text-white font-bold text-sm px-2 rounded-full">
-            {messageUser.rol}
+    <div className="bg-white flex flex-col sm:flex-row border-2 my-4 relative message">
+      <div className="sm:w-1/5 sm:border-r-2 sm:p-4 p-1 flex sm:flex-col flex-row justify-center items-center">
+        <div className="flex flex-col mr-2">
+          <span className="font-bold text-cyan-600 text-lg">
+            {message.userInfo.name}
           </span>
-        ) : (
-          <></>
-        )}
+          {messageUser?.rol && messageUser.rol != "user" ? (
+            <span className="bg-orange-600 text-white font-bold text-sm px-2 rounded-full">
+              {messageUser.rol}
+            </span>
+          ) : (
+            <></>
+          )}
+        </div>
         {!loadingUser && messageUser.urlAvatar ? (
-          <div className="w-36 h-36 overflow-hidden relative mt-3">
+          <div className="w-24 lg:w-36  h-24 lg:h-36 overflow-hidden relative mt-3">
             <Image
               src={messageUser.urlAvatar}
               alt="avatar"
