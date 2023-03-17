@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
 export async function middleware(req: NextRequest) {
-    const token = req.cookies.get("tokenAuth");
 
     if (req.nextUrl.pathname.startsWith("/nuevo-hilo")) {
+        const token = req.cookies.get("tokenAuth");
         if (!token) {
             return NextResponse.redirect(new URL("/", req.url))
         }
