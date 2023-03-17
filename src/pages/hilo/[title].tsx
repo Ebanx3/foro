@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import { context } from "@/UserContext";
 import Layout from "@/components/Layout";
 import Answer from "@/components/Answer";
+import Connection from "@/database/connection";
 
 const Hilo = ({ firstMessage, messages, thread }: any) => {
   const { user }: any = useContext(context);
@@ -71,6 +72,7 @@ const Hilo = ({ firstMessage, messages, thread }: any) => {
 };
 
 export async function getServerSideProps(datos: any) {
+  await Connection.getInstance();
   const titleWithSpaces = datos.query.title.replace(/_/g, " ");
 
   const thread = await ThreadModel.findOne({ title: titleWithSpaces });

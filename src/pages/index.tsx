@@ -21,7 +21,7 @@ export default function Home() {
 
 export async function getServerSideProps() {
   try {
-    const connection = await Connection.getInstance();
+    await Connection.getInstance();
 
     return {
       props: {

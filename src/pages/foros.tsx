@@ -2,6 +2,7 @@ import ForumCategory from "@/components/ForumCategory";
 import CategoryModel from "../../src/database/models/categories";
 import Layout from "@/components/Layout";
 import Head from "next/head";
+import Connection from "@/database/connection";
 
 const Foros = ({ cats }: any) => {
   return (
@@ -26,6 +27,9 @@ export async function getStaticProps() {
       subCategory: string[];
       imgUrl: string;
     };
+
+    await Connection.getInstance();
+
     const res = await CategoryModel.find({});
     const cats = res.map((cat) => {
       const cate: category = {
