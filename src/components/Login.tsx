@@ -13,21 +13,25 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
 
   const handleLogin = async () => {
     if (username != "" && password != "") {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify({ username, password }),
-        headers: { "Content-Type": "Application/json" },
-      });
-      const response = await res.json();
-      if (response.message == "Invalid username") {
-        return showAlert("Nombre de usuario inválido");
-      }
-      if (response.message == "Invalid password") {
-        return showAlert("Password inválido");
-      }
-      if (response.success) {
-        setUser(response.user);
-        setShowLogin(false);
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          body: JSON.stringify({ username, password }),
+          headers: { "Content-Type": "Application/json" },
+        });
+        const response = await res.json();
+        if (response.message === "Invalid username") {
+          return showAlert("Nombre de usuario inválido");
+        }
+        if (response.message === "Invalid password") {
+          return showAlert("Password inválido");
+        }
+        if (response.success) {
+          setUser(response.user);
+          setShowLogin(false);
+        }
+      } catch (error) {
+        console.log(error);
       }
     } else {
       return showAlert("Completa ambos campos");
