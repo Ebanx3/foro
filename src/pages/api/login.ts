@@ -1,14 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import UserModel from "@/database/models/users";
 import { generateAuthToken } from "@/auth";
-import Connection from "@/database/connection";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
         if (req.method != 'POST') return res.status(404).json({ success: false, message: 'Undefined path' })
-
-        await Connection.getInstance();
 
         const { username, password } = req.body;
 

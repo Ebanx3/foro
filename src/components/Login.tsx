@@ -25,9 +25,10 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
       if (response.message == "Invalid password") {
         return showAlert("Password inválido");
       }
-
-      setUser(response.user);
-      setShowLogin(false);
+      if (response.success) {
+        setUser(response.user);
+        setShowLogin(false);
+      }
     } else {
       return showAlert("Completa ambos campos");
     }
