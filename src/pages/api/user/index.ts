@@ -13,8 +13,8 @@ export default async function handler(
                 await UserModel.findByIdAndUpdate(userId, { urlAvatar })
                 return res.status(200).json({ success: true, message: 'urlAvatar added' })
             }
-            catch (err) {
-                console.log(err)
+            catch (error) {
+                return res.status(500).json({ success: false, message: "Error trying to update that user", error })
             }
         }
         default: {

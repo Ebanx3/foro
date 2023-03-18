@@ -19,9 +19,9 @@ export default async function handler(
         })
 
     } catch (error) {
-        console.log(error);
+
         return res
             .status(500)
-            .json({ success: false, message: "Error trying to login" });
+            .json({ success: false, message: "Error trying to login", error });
     }
 }

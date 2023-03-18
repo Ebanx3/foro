@@ -19,8 +19,8 @@ export default async function handler(
                 }
                 return res.status(200).json({ success: true, formatedUser })
             }
-            catch (err) {
-                console.log(err)
+            catch (error) {
+                res.status(500).json({ success: false, message: "Error trying to get that user", error })
             }
         }
         default: {

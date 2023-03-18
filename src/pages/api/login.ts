@@ -1,11 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import UserModel from "@/database/models/users";
 import { generateAuthToken } from "@/auth";
+import Connection from "@/database/connection";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
-        if (req.method != 'POST') return res.status(404).json({ sucess: false, message: 'Undefined path' })
+        if (req.method != 'POST') return res.status(404).json({ success: false, message: 'Undefined path' })
+
+        await Connection.getInstance();
 
         const { username, password } = req.body;
 
@@ -20,11 +23,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const token = generateAuthToken(user);
 
-        return res.status(200).setHeader('Set-Cookie', token).json({ sucess: true, message: 'ok', user: { username: user.username, userId: user._id, rol: user.rol, urlAvatar: user.urlAvatar } })
+        return res.status(200).setHeader('Set-Cookie', token).json({ success: true, message: 'ok', user: { username: user.username, userId: user._id, rol: user.rol, urlAvatar: user.urlAvatar } })
     }
     catch (error) {
-        console.log(error);
-        return res.status(500).json({ success: false, message: 'Error trying to login' })
+        return res.status(500).json({ success: false, message: 'Error trying to login', error })
     }
 
 

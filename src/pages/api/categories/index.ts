@@ -6,7 +6,6 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    console.log(req.method)
     switch (req.method) {
         case 'GET': {
             return getAllCategories(req, res);
