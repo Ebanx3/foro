@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 import InfoText from "@/components/InfoText";
 import Nav from "@/components/Nav";
-import Connection from "@/database/connection";
+import dbConnect from "@/lib/dbConnect";
 
 const md = new Remarkable();
 
@@ -24,7 +24,7 @@ const NewThread = () => {
 
   const handleNewThread = async () => {
     if (title != "" && content != "") {
-      await Connection.getInstance();
+      await dbConnect();
       const response = await fetch("/api/thread", {
         method: "POST",
         headers: { "Content-Type": "Application/json" },

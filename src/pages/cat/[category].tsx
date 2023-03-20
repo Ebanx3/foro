@@ -8,7 +8,7 @@ import { context } from "@/UserContext";
 import Thread from "../../components/Thread";
 import Layout from "@/components/Layout";
 import formatDate from "@/formatDate";
-import Connection from "@/database/connection";
+import dbConnect from "@/lib/dbConnect";
 
 const Categoria = ({ subcategories, threads }: any) => {
   const route = useRouter();
@@ -49,7 +49,7 @@ const Categoria = ({ subcategories, threads }: any) => {
 };
 
 export async function getServerSideProps(datos: any) {
-  await Connection.getInstance();
+  await dbConnect();
   const category = await CategoryModel.findOne({ name: datos.query.category });
   const threads = await ThreadModel.find({ category: datos.query.category });
 

@@ -5,7 +5,7 @@ import { context } from "@/UserContext";
 import Thread from "../../components/Thread";
 import ThreadModel from "../../database/models/thread";
 import Layout from "@/components/Layout";
-import Connection from "@/database/connection";
+import dbConnect from "@/lib/dbConnect";
 
 const Topic = ({ threads }: any) => {
   const route = useRouter();
@@ -43,7 +43,7 @@ const Topic = ({ threads }: any) => {
 };
 
 export async function getServerSideProps(datos: any) {
-  await Connection.getInstance();
+  await dbConnect();
   const threads = await ThreadModel.find({ category: datos.query.topic });
 
   const formatedThreads = threads.map((thread) => {

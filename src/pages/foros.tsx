@@ -2,7 +2,7 @@ import ForumCategory from "@/components/ForumCategory";
 import CategoryModel from "../../src/database/models/categories";
 import Layout from "@/components/Layout";
 import Head from "next/head";
-import Connection from "@/database/connection";
+import dbConnect from "@/lib/dbConnect";
 
 const Foros = ({ cats }: any) => {
   return (
@@ -28,7 +28,7 @@ export async function getStaticProps() {
       imgUrl: string;
     };
 
-    await Connection.getInstance();
+    await dbConnect();
 
     const res = await CategoryModel.find({});
     const cats = res.map((cat) => {

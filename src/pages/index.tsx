@@ -1,4 +1,4 @@
-import Connection from "@/database/connection";
+import dbConnect from "@/lib/dbConnect";
 import Head from "next/head";
 import Layout from "@/components/Layout";
 
@@ -21,7 +21,7 @@ export default function Home() {
 
 export async function getServerSideProps() {
   try {
-    await Connection.getInstance();
+    await dbConnect();
 
     return {
       props: {
@@ -30,5 +30,10 @@ export async function getServerSideProps() {
     };
   } catch (error) {
     console.log(error);
+    return {
+      props: {
+        connection: false,
+      },
+    };
   }
 }
