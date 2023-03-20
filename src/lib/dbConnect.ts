@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const DB_CONNECTION_URL: string = process.env.DB_CONNECTION_URL || "";
 
@@ -14,10 +14,15 @@ if (!DB_CONNECTION_URL) {
  * during API Route usage.
  */
 
-let cached = global.mongoose;
+
+let globalWithMongoose = global as typeof globalThis & {
+  mongoose: any
+}
+
+let cached = globalWithMongoose.mongoose
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = globalWithMongoose.mongoose = { conn: null, promise: null };
 }
 
 async function dbConnect() {
@@ -38,7 +43,6 @@ async function dbConnect() {
     cached.promise = mongoose
       .connect(DB_CONNECTION_URL, opts)
       .then((mongoose) => {
-        console.log("connected to db")
         return mongoose;
       });
   }
