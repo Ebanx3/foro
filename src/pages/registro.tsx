@@ -1,8 +1,7 @@
 import { Formik } from "formik";
 import { useRouter } from "next/router";
 import Nav from "@/components/Nav";
-import Connection from "@/database/connection";
-import dbConnect from "@/lib/dbConnect";
+import dbConnection from "../database/connection";
 
 const Registro = () => {
   const route = useRouter();
@@ -34,7 +33,8 @@ const Registro = () => {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
-              await dbConnect();
+              await dbConnection.getInstance();
+
               const res = await fetch("/api/register", {
                 method: "POST",
                 body: JSON.stringify({
