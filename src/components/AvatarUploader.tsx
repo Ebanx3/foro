@@ -1,46 +1,46 @@
 import { context } from "@/UserContext";
 import { useContext, useState } from "react";
-import UserModel from "../database/models/users";
+import axios from "axios";
 
-const AvatarUploader = ({ selectedImage, setSelectedImage, username }: any) => {
+const AvatarUploader = ({
+  selectedImage,
+  setSelectedImage,
+  username,
+}: {
+  selectedImage: any;
+  setSelectedImage: Function;
+  username: string;
+}) => {
   const [uploading, setUploading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File>();
+  const [selectedFile, setSelectedFile] = useState<
+    ArrayBuffer | string | null
+  >();
 
   const { user, setUser }: any = useContext(context);
 
+  const setFileToBase = (file: File) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setSelectedFile(reader.result);
+    };
+  };
   const handleUpload = async () => {
     setUploading(true);
     try {
       if (!selectedFile) return;
-      const formData = new FormData();
-      formData.append(`${username}`, selectedFile);
 
-      const res = await fetch("/api/image", {
-        method: "POST",
-        body: formData,
+      const { data } = await axios.post("/api/image", {
+        userId: user.userId,
+        image: selectedFile,
       });
-      const response = await res.json();
-
-      if (response.success) {
-        const imageName = selectedFile.name.split(".");
-        const urlAvatar = `/avatars/avatar-${username}.${
-          imageName[imageName.length - 1]
-        }`;
-        // await UserModel.findByIdAndUpdate(user.userId, { urlAvatar });
-        const res = await fetch("/api/user", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId: user.userId, urlAvatar }),
+      if (data.success === true) {
+        setUser({
+          ...user,
+          urlAvatar: data.urlAvatar,
         });
-        const response = await res.json();
-        if (response.success) {
-          setUser({
-            ...user,
-            urlAvatar,
-          });
-        }
       }
-      if (response.message === "Unauthorized") {
+      if (data.message === "Unauthorized") {
         setUser({});
       }
     } catch (error) {}
@@ -69,7 +69,7 @@ const AvatarUploader = ({ selectedImage, setSelectedImage, username }: any) => {
           if (target.files) {
             const file = target.files[0];
             setSelectedImage(URL.createObjectURL(file));
-            setSelectedFile(file);
+            setFileToBase(file);
           }
         }}
       />

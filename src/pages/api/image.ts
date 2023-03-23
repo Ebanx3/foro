@@ -1,36 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import formidable from "formidable";
-import path from "path";
-import fs from "fs/promises"
 import { checkAuth } from "@/auth";
-
-export const config = {
-    api: {
-        bodyParser: false,
-    }
-}
-
-const readFile = (req: NextApiRequest, saveLocally?: boolean) => {
-    // const { username } = req.body;
-
-    const options: formidable.Options = {};
-    options.keepExtensions = true;
-    if (saveLocally) {
-        options.uploadDir = path.join(process.cwd(), "/public/avatars");
-        options.filename = (name, path, ext) => {
-            return "avatar-" + ext.name + path
-        }
-    }
-    options.maxFileSize = 50 * 500 * 500;
-    const form = formidable(options)
-    return new Promise((resolve, reject) => {
-        form.parse(req, (err, fields, files) => {
-            if (err) reject(err);
-            resolve({ fields, files })
-        })
-    })
-
-}
+import cloudinary from "@/cloudinary";
+import UserModel from "@/database/models/users";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { tokenAuth } = req.cookies;
@@ -38,11 +9,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(401).json({ success: false, message: "Unauthorized" })
     }
     try {
-        await fs.readdir(path.join(process.cwd(), "/public", "/avatars"));
+        const { userId, image } = req.body;
+        const result = await cloudinary.uploader.upload(image, { folder: "avatars", width: 300, height: 300, crop: "thumb" });
+        await UserModel.findByIdAndUpdate(userId, { urlAvatar: result.secure_url });
+        res.json({ success: true, userId, urlAvatar: result.secure_url })
     }
     catch (error) {
-        await fs.mkdir(path.join(process.cwd(), "/public", "/avatars"));
+        console.log(error)
+        res.json({ success: true })
+
     }
-    await readFile(req, true);
-    res.json({ success: true })
 }
