@@ -46,7 +46,7 @@ const Login = ({ setShowLogin }: { setShowLogin: Function }) => {
   };
 
   return (
-    <div className=" absolute right-0 top-12 bg-white border-l-2 border-b-2 p-4">
+    <div className="absolute right-0 top-20 bg-white border-l-2 border-b-2 p-4">
       {user?.username ? (
         <UserMenu />
       ) : (

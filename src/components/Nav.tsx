@@ -12,45 +12,34 @@ const Nav = () => {
   };
 
   return (
-    <nav className=" h-12 sticky top-0 bg-cyan-800 flex flex-row justify-between  px-10 flex-nowrap items-end z-20">
-      <Link href="/" className="font-bold text-3xl text-white hover:text-white">
+    <nav className="sticky top-0 h-20 flex flex-row justify-center bg-cyan-800 p-5 flex-nowrap items-center z-20">
+      <Link
+        href="/"
+        className="font-bold text-3xl text-white hover:text-orange-300"
+      >
         code-foro
       </Link>
-
-      <div className="flex items-end pb-2">
-        <div className="relative">
-          <input
-            type="text"
-            name="search"
-            id="search"
-            placeholder="buscar..."
-            className="mr-4 bg-cyan-50 rounded-full text-center text-black focus:outline-none w-28 focus:w-52 transition-all ease-linear"
-          />
-          <button className="text-white h-6 w-6 overflow-hidden absolute right-4 -bottom-0 bg-cyan-600 rounded-full hover:bg-orange-500 ">
-            <FontAwesomeIcon icon={solid("magnifying-glass")} />
-          </button>
-        </div>
-        <Link
-          href="/"
-          className="font-bold text-sm text-white mr-4 hover:text-orange-400"
-        >
-          INICIO
-        </Link>
-        <Link
-          href="/foros"
-          className="font-bold text-sm text-white mr-4 hover:text-orange-300"
-        >
-          FOROS
-        </Link>
-        <span
-          className="font-bold text-sm text-white hover:text-orange-300 cursor-pointer"
-          onClick={() => {
-            handleUserPanel();
-          }}
-        >
-          USUARIO
-        </span>
+      <span
+        className="font-bold text-sm text-white hover:text-orange-300 cursor-pointer mx-6"
+        onClick={() => {
+          handleUserPanel();
+        }}
+      >
+        USUARIO
+      </span>
+      <div className="relative flex flex-row items-center">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          placeholder="buscar..."
+          className="mr-4 bg-cyan-900 rounded-full text-center text-white focus:outline-none w-28 focus:w-52 transition-all ease-linear border-2 border-cyan-500"
+        />
+        <button className="text-white h-8 w-8 overflow-hidden absolute right-3  bg-cyan-600 rounded-full hover:bg-orange-500 ">
+          <FontAwesomeIcon icon={solid("magnifying-glass")} />
+        </button>
       </div>
+
       {showLogin ? <Login setShowLogin={setShowLogin} /> : <></>}
     </nav>
   );

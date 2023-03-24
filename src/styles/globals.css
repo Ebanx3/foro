@@ -65,3 +65,21 @@ code {
     border-radius: 10px;
     font-weight: bold;
 }
+
+@media screen and (max-width: 640px) {
+    .message h1 {
+        font-size: large;
+    }
+
+    .message h2 {
+        font-size: medium;
+    }
+
+    .message h3,
+    h4,
+    h5,
+    h6,
+    p {
+        font-size: small;
+    }
+}

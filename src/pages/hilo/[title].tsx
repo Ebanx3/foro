@@ -30,7 +30,7 @@ const Hilo = ({ firstMessage, messages, thread }: any) => {
   useEffect(() => {}, [msgs]);
   return (
     <Layout>
-      <div className="flex flex-col w-11/12  mx-auto my-8">
+      <div className="flex flex-col w-full sm:w-11/12 my-8 sm:mx-8">
         <Message
           message={firstMessage}
           title={thread.title}
