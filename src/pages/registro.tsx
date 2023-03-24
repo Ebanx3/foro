@@ -10,8 +10,8 @@ const Registro = () => {
     <>
       <Nav />
       <div className="flex ">
-        <div className="w-1/5"></div>
-        <div className="w-3/5 relative">
+        <div className="lg:w-1/5"></div>
+        <div className="lg:w-3/5 sm:w-11/12 w-full m-auto relative">
           <Formik
             initialValues={{
               email: "",
@@ -75,7 +75,7 @@ const Registro = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.username}
-                  className="mt-6 w-2/4 m-auto p-2 bg-white rounded-full pl-8 border-2 border-zinc-400 focus:outline-none"
+                  className="mt-6 w-11/12 md:w-2/4 m-auto p-2 bg-white rounded-full pl-8 border-2 border-zinc-400 focus:outline-none"
                   placeholder="Username"
                 />
                 {errors.username && touched.username && errors.username ? (
@@ -93,7 +93,7 @@ const Registro = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.email}
-                  className="mt-6 w-2/4 m-auto p-2 bg-white rounded-full pl-8 border-2 border-zinc-400 focus:outline-none"
+                  className="mt-6 w-11/12 md:w-2/4 m-auto p-2 bg-white rounded-full pl-8 border-2 border-zinc-400 focus:outline-none"
                   placeholder="Email"
                 />
                 {errors.email && touched.email && errors.email ? (
@@ -111,7 +111,7 @@ const Registro = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.password}
-                  className="mt-6 w-2/4 m-auto p-2 bg-white rounded-full pl-8 border-2 border-zinc-400 focus:outline-none"
+                  className="mt-6 w-11/12 md:w-2/4 m-auto p-2 bg-white rounded-full pl-8 border-2 border-zinc-400 focus:outline-none"
                   placeholder="Contraseña"
                 />
                 {errors.password && touched.password && errors.password ? (
@@ -123,7 +123,7 @@ const Registro = () => {
                 )}
 
                 <button
-                  className="mt-6 w-1/4 p-2 m-auto bg-cyan-600 hover:bg-cyan-500 text-white rounded-full"
+                  className="mt-6 lg:w-1/4 p-2 m-auto bg-cyan-600 hover:bg-cyan-500 text-white rounded-full"
                   type="submit"
                   disabled={isSubmitting}
                 >
@@ -133,7 +133,7 @@ const Registro = () => {
             )}
           </Formik>
         </div>
-        <div className="w-1/5"></div>
+        <div className="lg:w-1/5"></div>
       </div>
     </>
   );
