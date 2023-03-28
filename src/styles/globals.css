@@ -65,7 +65,7 @@ code {
     font-family: 'Courier New', Courier, monospace;
     border-radius: 10px;
     font-weight: bold;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 
