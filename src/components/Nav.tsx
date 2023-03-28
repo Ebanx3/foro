@@ -27,7 +27,7 @@ const Nav = () => {
       >
         USUARIO
       </span>
-      <div className="relative flex flex-row items-center">
+      {/* <div className="relative flex flex-row items-center">
         <input
           type="text"
           name="search"
@@ -38,7 +38,7 @@ const Nav = () => {
         <button className="text-white h-8 w-8 overflow-hidden absolute right-3  bg-cyan-600 rounded-full hover:bg-orange-500 ">
           <FontAwesomeIcon icon={solid("magnifying-glass")} />
         </button>
-      </div>
+      </div> */}
 
       {showLogin ? <Login setShowLogin={setShowLogin} /> : <></>}
     </nav>

@@ -98,7 +98,7 @@ const Message = ({ message, title, type, deleteMessage }: any) => {
         )}
       </div>
 
-      <div className="w-full sm:w-4/5 mx-2 my-1 sm:my-12 pb-6">
+      <div className="w-full sm:w-4/5 sm:mx-2 my-1 mb-6 sm:my-12 pb-6">
         {editing ? (
           <EditingMessage
             msg={msg}
