@@ -58,7 +58,7 @@ const Message = ({ message, title, type, deleteMessage }: any) => {
 
   return (
     <div className="bg-white flex flex-col sm:flex-row border-2 my-4 relative message">
-      <div className="sm:w-1/5 sm:border-r-2 sm:p-4 p-1 flex sm:flex-col flex-row justify-center items-center border-b-2 sm:border-b-0">
+      <div className="sm:w-1/5 sm:border-r-2 sm:p-4 p-1 flex sm:flex-col flex-row justify-start items-center border-b-2 sm:border-b-0">
         <div className="flex flex-col mr-2">
           <span className="font-bold text-cyan-600 text-lg">
             {message.userInfo.name}
